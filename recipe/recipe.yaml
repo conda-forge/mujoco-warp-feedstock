@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: mujoco-warp
-  version: "3.5.0.2"
+  version: 3.6.0
 
 package:
   name: ${{ name|lower }}
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/mujoco_warp-${{ version }}.tar.gz
-  sha256: c0ca9d9f39495714f24d20da3a22d0c04032c48e9b79d2f852aa63128a38c26a
+  sha256: 3c4111a4e13dc61268ddac52593ac5032c05a7d80f0c5e3c98bf5881e32b5d06
 
 build:
-  number: 1
+  number: 0
   noarch: python
   script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
@@ -24,17 +24,12 @@ requirements:
     - setuptools
   run:
     - absl-py
-    - mujoco >=3.4.0
+    - mujoco >=3.5.0
     - numpy
     - python >=${{ python_min }}
-    - warp-lang >=1.11.0
-    # etils[epath] dependencies.
-    # https://github.com/google/etils/blob/main/pyproject.toml
+    - warp-lang >=1.12
     - etils
-    - fsspec
-    - typing-extensions
-    - zipp
-
+    - mujoco-python
 tests:
   - python:
       imports:
