@@ -3,6 +3,7 @@ schema_version: 1
 context:
   name: mujoco-warp
   version: 3.6.0
+  build_number: 1
 
 package:
   name: ${{ name|lower }}
@@ -13,8 +14,8 @@ source:
   sha256: 3c4111a4e13dc61268ddac52593ac5032c05a7d80f0c5e3c98bf5881e32b5d06
 
 build:
-  number: 0
   noarch: python
+  number: ${{ build_number }}
   script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -28,8 +29,12 @@ requirements:
     - numpy
     - python >=${{ python_min }}
     - warp-lang >=1.12
+    # etils[epath] dependencies.
+    # https://github.com/google/etils/blob/main/pyproject.toml
     - etils
-    - mujoco-python
+    - fsspec
+    - typing-extensions
+    - zipp
 tests:
   - python:
       imports:
