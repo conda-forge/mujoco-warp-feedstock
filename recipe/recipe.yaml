@@ -2,8 +2,8 @@ schema_version: 1
 
 context:
   name: mujoco-warp
-  version: 3.6.0
-  build_number: 1
+  version: "3.7.0.1"
+  build_number: 0
 
 package:
   name: ${{ name|lower }}
@@ -11,12 +11,16 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/mujoco_warp-${{ version }}.tar.gz
-  sha256: 3c4111a4e13dc61268ddac52593ac5032c05a7d80f0c5e3c98bf5881e32b5d06
+  sha256: 7c664139ef038212c2c4f4d355a154f70fcaffe9a308f95bfe7b50ab5df8802f
 
 build:
   noarch: python
   number: ${{ build_number }}
   script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - mjwarp-testspeed = mujoco_warp.testspeed:main
+      - mjwarp-viewer = mujoco_warp.viewer:main
 
 requirements:
   host:
@@ -25,7 +29,7 @@ requirements:
     - setuptools
   run:
     - absl-py
-    - mujoco >=3.5.0
+    - mujoco >=3.6.0
     - numpy
     - python >=${{ python_min }}
     - warp-lang >=1.12
@@ -35,20 +39,23 @@ requirements:
     - fsspec
     - typing-extensions
     - zipp
+
 tests:
   - python:
       imports:
         - mujoco_warp
       pip_check: true
-      # Tests fail with default python_min (3.10) because a very old version of jaxlib is installed.
-      # https://github.com/conda-forge/warp-lang-feedstock/issues/83
-      python_version: 3.11.*
+      python_version: ${{ python_min }}.*
   - script:
       # The mujoco_warp package bundles the tests in the package, so we can run them from there.
       - if: not win
         then:
+          - which mjwarp-testspeed
+          - which mjwarp-viewer
           - pytest --pyargs mujoco_warp
         else:
+          - where mjwarp-testspeed
+          - where mjwarp-viewer
           - pytest --pyargs mujoco_warp -k "not test_collision20"
     files:
       source:
@@ -57,11 +64,11 @@ tests:
       run:
         - pip
         - pytest
-        - python 3.11.*
-        # jax_test.py uses `scipy.linalg.tril`, which was removed in scipy 1.13.0.
-        - scipy <1.13.0
+        - python ${{ python_min }}.*
+        - scipy
 
 about:
+  documentation: https://mujoco.readthedocs.io
   homepage: https://github.com/google-deepmind/mujoco_warp
   license: Apache-2.0
   license_file: LICENSE
