@@ -45,19 +45,17 @@ tests:
       imports:
         - mujoco_warp
       pip_check: true
-      # Tests fail with default python_min (3.10) because a very old version of jaxlib is installed.
-      # https://github.com/conda-forge/warp-lang-feedstock/issues/83
-      python_version: 3.11.*
-  - package_contents:
-      bin:
-        - mjwarp-testspeed
-        - mjwarp-viewer
+      python_version: ${{ python_min }}.*
   - script:
       # The mujoco_warp package bundles the tests in the package, so we can run them from there.
       - if: not win
         then:
+          - which mjwarp-testspeed
+          - which mjwarp-viewer
           - pytest --pyargs mujoco_warp
         else:
+          - where mjwarp-testspeed
+          - where mjwarp-viewer
           - pytest --pyargs mujoco_warp -k "not test_collision20"
     files:
       source:
@@ -66,7 +64,7 @@ tests:
       run:
         - pip
         - pytest
-        - python 3.11.*
+        - python ${{ python_min }}.*
         - scipy
 
 about:
