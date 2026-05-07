@@ -11,6 +11,8 @@ Summary: GPU-optimized version of the MuJoCo physics simulator, designed for NVI
 
 Development: https://github.com/google-deepmind/mujoco_warp
 
+Documentation: https://mujoco.readthedocs.io/
+
 Current build status
 ====================
 
