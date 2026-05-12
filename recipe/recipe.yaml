@@ -29,7 +29,7 @@ requirements:
     - setuptools
   run:
     - absl-py
-    - mujoco >=3.6.0
+    - mujoco >=3.8.0
     - numpy
     - python >=${{ python_min }}
     - warp-lang >=1.12
