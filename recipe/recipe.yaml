@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: mujoco-warp
-  version: "3.10.0.1"
+  version: "3.10.0.2"
   build_number: 0
 
 package:
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/mujoco_warp-${{ version }}.tar.gz
-  sha256: adca3e740112bca1aaaa732556aad0f36fb3dea99f86abd22ee1232dc5e2b28d
+  sha256: 3fe8b5c68bd30eda31af45d1cbee42480a7d1c6e69a35733c5538445375fc570
 
 build:
   noarch: python
