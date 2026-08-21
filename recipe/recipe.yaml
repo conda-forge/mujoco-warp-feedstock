@@ -29,10 +29,10 @@ requirements:
     - setuptools
   run:
     - absl-py
-    - mujoco >=3.9.0
+    - mujoco >=3.11.0
     - numpy
     - python >=${{ python_min }}
-    - warp-lang >=1.14
+    - warp-lang >=1.15
     # etils[epath] dependencies.
     # https://github.com/google/etils/blob/main/pyproject.toml
     - etils
