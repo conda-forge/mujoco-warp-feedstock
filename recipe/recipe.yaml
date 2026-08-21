@@ -45,7 +45,9 @@ tests:
       imports:
         - mujoco_warp
       pip_check: true
-      python_version: ${{ python_min }}.*
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
   - script:
       # The mujoco_warp package bundles the tests in the package, so we can run them from there.
       - if: not win
